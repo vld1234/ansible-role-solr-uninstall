@@ -1,0 +1,5 @@
+---
+- name: Solr-standalone
+  hosts: all
+  roles:
+    - role: ansible-role-solr-uninstall

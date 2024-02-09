@@ -1,0 +1,10 @@
+---
+- name: Remove solr service
+  win_service:
+    name: '{{ solr_service_name }}'
+    state: absent
+
+- name: Remove Solr directory
+  win_file:
+    path: '{{ solr_dest_path }}'
+    state: absent

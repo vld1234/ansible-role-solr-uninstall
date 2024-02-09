@@ -1,0 +1,47 @@
+---
+- block:
+
+    - name: Check systemd solr file exists
+      stat:
+        path: '/lib/systemd/system/{{ solr_service_name }}.service'
+      register: service_file
+
+    - name: Stop solr service
+      systemd:
+        name: '{{ solr_service_name }}'
+        state: stopped
+        enabled: False
+      when: service_file.stat.exists
+
+    - name: Remove solr config files and folders
+      file:
+        path: '{{ solr_conf_files }}'
+        state: absent
+      loop:
+        - '/lib/systemd/system/{{ solr_service_name }}.service'
+        - '{{ solr_insh_default }}'
+        - '{{ solr_base_path }}'
+        - '{{ solr_dest_path }}'
+        - '{{ solr_dest_main_path }}/solr'
+      loop_control:
+        loop_var: solr_conf_files
+
+    - name: Delete solr user
+      user:
+        name: '{{ solr_user }}'
+        state: absent
+        remove: True
+        force: True
+      when: solr_remove_user
+
+    - name: Delete solr group
+      group:
+        name: '{{ solr_group }}'
+        state: absent
+      when: solr_remove_user
+
+    - name: Reload deamon
+      systemd:
+        daemon_reload: True
+
+  become: True

@@ -1,0 +1,15 @@
+---
+solr_version: 8.11.2
+
+solr_service_name: solr
+solr_with_systemd: True
+
+solr_user: solr
+solr_group: solr
+solr_base_path: /var/solr
+solr_insh_default: /etc/default/solr.in.sh
+
+solr_dest_main_path: '{{ default_solr_dest_main_path }}'
+solr_dest_path: '{{ solr_dest_main_path }}/solr-{{ solr_version }}'
+
+solr_remove_user: False
