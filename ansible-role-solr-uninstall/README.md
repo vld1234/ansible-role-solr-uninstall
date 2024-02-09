@@ -101,13 +101,3 @@ Example Playbook
     - role: lean_delivery.solr_uninstall
 ```
 
-License
--------
-
-Apache
-
-Author Information
-------------------
-
-authors:
-  - Lean Delivery Team <team@lean-delivery.com>
